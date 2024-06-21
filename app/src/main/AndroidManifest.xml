@@ -1,24 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools">
+    package="com.example.my_nga_fornums">
+    <!-- 添加访问网络的权限 -->
+    <uses-permission android:name="android.permission.INTERNET" /> <!-- SD卡写入:https://blog.csdn.net/haoxuhong/article/details/79864113 -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
+        android:usesCleartextTraffic="true"
+        android:name="org.litepal.LitePalApplication"
         android:allowBackup="true"
-        android:dataExtractionRules="@xml/data_extraction_rules"
-        android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.MyApplication"
-        tools:targetApi="31">
+        android:theme="@style/AppTheme">
+<!--        <activity android:name="com.example.my_nga_fornums.usermodel.EditArticleActivity"></activity>-->
+<!--        <activity android:name="com.example.my_nga_fornums.usermodel.ArticleDetailActivity" />-->
+<!--        <activity android:name="com.example.my_nga_fornums.usermodel.ArticleActivity" />-->
+<!--        <activity android:name="com.example.my_nga_fornums.usermodel.UserFavoriteActivity" />-->
+<!--        <activity android:name="com.example.my_nga_fornums.usermodel.UserDetailActivity" />-->
+<!--        <activity android:name="com.example.my_nga_fornums.usermodel.RegisterActivity" />-->
+<!--        <activity android:name="com.example.my_nga_fornums.usermodel.LoginActivity" />-->
+<!--        <activity android:name="com.example.my_nga_fornums.WebActivity" />-->
+        <!--
+            使用singleTask会在返回栈中检查是否存在该活动实例，
+        若存在则直接使用该实例，并把这个活动之上的所有活动统统出栈，
+        若没有发现就会创建一个新的活动实例
+        -->
         <activity
-            android:name=".MainActivity"
+            android:name="com.example.my_nga_fornums.MainActivity"
+            android:launchMode="singleTask"
             android:exported="true">
             <intent-filter>
+
+                <!-- 添加以下一条标签去除警告：https://www.jianshu.com/p/682e85c412a8 -->
+                <action android:name="android.intent.action.VIEW" />
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.SEARCH" />
+
+                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
     </application>
