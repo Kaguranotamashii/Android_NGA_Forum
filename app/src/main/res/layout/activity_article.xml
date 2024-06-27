@@ -1,4 +1,4 @@
-<!--加强版FrameLayout，coordinatorlayout-->
+<!--我的文章界面-->
 <com.google.android.material.circularreveal.coordinatorlayout.CircularRevealCoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
@@ -8,7 +8,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <!--?attr/actionBarSize表示AppCompatTheme的一个自定义属性，是ActionBar的高度，可以自定义-->
+        <!--?attr/actionBarSize表示AppCompatTheme的一个自定义属性，是ActionBar的高度，
+        可以自定义修改 TODO-->
         <!--定义Toolbar控件-->
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/article_toolbar"
@@ -28,13 +29,14 @@
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
-    <!--FloatingActionButton是coordinatorlayout的子控件，能被及时监听到-->
+    <!--FloatingActionButton是coordinatorlayout的子控件，能被及时监听到，TODO-->
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/article_fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="16dp"
+        android:contentDescription="TODO"
         android:src="@drawable/ic_edit_article"
         app:elevation="8dp" />
     <!--设置阴影效果：app:elevation-->
