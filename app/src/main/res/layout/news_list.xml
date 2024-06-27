@@ -2,9 +2,9 @@
 <!--CoordinatorLayout是一个加强版的FrameLayout自动实现将内部的浮动按钮向上偏移，还有其它功能-->
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -31,11 +31,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:divider="@color/colorWhite"
-                android:scrollbars="none">
-            </ListView>
+                android:scrollbars="none"></ListView>
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
+
         <!--放置右下角-->
+<!--        android:layout_gravity="bottom|end"：设置了按钮在父布局中的位置，使其位于父布局的底部右侧。-->
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fab"
             android:layout_width="wrap_content"

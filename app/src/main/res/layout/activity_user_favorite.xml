@@ -14,9 +14,9 @@
             android:id="@+id/userFavorite_toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
+            android:background="@color/colorAccent"
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-            android:background="?attr/colorPrimary"
-            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
         <ListView
             android:id="@+id/favorite_newsList"
