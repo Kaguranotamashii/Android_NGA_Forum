@@ -8,19 +8,19 @@
     android:scaleType="centerCrop"
     tools:context=".usermodel.LoginActivity">
 
-
+    <!--顶部窗口布局-->
     <LinearLayout
         android:layout_width="389dp"
         android:layout_height="94dp"
         android:layout_marginTop="20dp"
         android:orientation="horizontal">
-
+        <!--头像-->
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/login_logo"
             android:layout_width="100dp"
             android:layout_height="match_parent"
             android:src="@drawable/akl" />
-
+        <!--文本-->
         <TextView
             android:id="@+id/textview_login"
             android:layout_width="156dp"
@@ -31,7 +31,7 @@
             android:textSize="30sp"
             android:textStyle="bold" />
     </LinearLayout>
-
+    <!--登录账号框-->
     <EditText
         android:id="@+id/login_userAccount"
         android:layout_width="match_parent"
@@ -45,7 +45,7 @@
         android:textColorHint="#D11857"
         android:maxLines="1"
         android:singleLine="true" />
-
+    <!--登陆密码框-->
     <EditText
         android:id="@+id/login_pwd"
         android:layout_width="match_parent"
@@ -72,10 +72,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <!--
-            android:layout_centerVertical="true"
-            相对布局的垂直居中
-        -->
+        <!--登录按钮-->
         <Button
             android:id="@+id/login_on"
             android:layout_width="0dp"
@@ -86,7 +83,7 @@
             android:textColor="@color/colorGray"
             android:textStyle="bold"
             />
-
+        <!--注册按钮-->
         <Button
             android:id="@+id/login_register"
             android:layout_width="0dp"

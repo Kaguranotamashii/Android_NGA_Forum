@@ -35,7 +35,7 @@
 
         </com.google.android.material.tabs.TabLayout>
 
-        <!---->
+        <!-- 定义一个 ViewPager 控件，允许用户左右滑动以浏览不同的页面 -->
         <androidx.viewpager.widget.ViewPager
             android:id="@+id/viewPager"
             android:layout_width="match_parent"
@@ -43,7 +43,9 @@
 
         </androidx.viewpager.widget.ViewPager>
     </LinearLayout>
-
+    <!-- 定义一个 NavigationView 控件，用于实现侧滑菜单导航 -->
+    <!-- 指定 NavigationView android:layout_gravity="start" 应该位于其父容器的开始位置，通常是屏幕的左侧 -->
+    <!-- 指定 NavigationView app:menu="@menu/nav_menu" 的菜单资源，定义了菜单项和行为 -->
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/nav_design"
         android:layout_width="match_parent"
