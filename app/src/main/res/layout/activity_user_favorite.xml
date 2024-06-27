@@ -9,7 +9,7 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-
+        <!-- Toolbar作为应用的行动栏，提供导航和操作 -->
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/userFavorite_toolbar"
             android:layout_width="match_parent"
@@ -18,6 +18,7 @@
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
+        <!-- ListView用于显示用户收藏的新闻列表 -->
         <ListView
             android:id="@+id/favorite_newsList"
             android:layout_width="match_parent"

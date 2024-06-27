@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- 使用RelativeLayout来灵活定位视图元素，高度固定为180dp并应用背景图片及内边距 -->
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="180dp"
@@ -6,20 +7,23 @@
     android:orientation="horizontal"
     android:padding="10dp">
 
-    <!--将头像照片圆形化-->
+    <!-- CircleImageView库提供的控件，用于显示圆形的头像图片 -->
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/icon_image"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_centerInParent="true"
-        android:src="@drawable/akl" />
+    android:src="@drawable/akl" />
 
+    <!-- 显示个性签名的TextView，置于布局底部 -->
 
+    <!-- 显示昵称的TextView，置于个性签名之上并有底部外边距 -->
     <TextView
         android:id="@+id/text_signature"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="366dp"
+        android:layout_height="33dp"
         android:layout_alignParentBottom="true"
+        android:layout_marginBottom="12dp"
         android:textColor="#FFF"
         android:textSize="14sp" />
 

@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- CoordinatorLayout作为一个协调布局，用于管理其子视图之间的交互和行为 -->
 <!--CoordinatorLayout是一个加强版的FrameLayout自动实现将内部的浮动按钮向上偏移，还有其它功能-->
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
-
+    <!-- FrameLayout用于承载主内容区域的视图 -->
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -26,6 +27,7 @@
             <!--新闻列表，去掉间隔线
                 android:divider="@color/colorWhite"
             -->
+            <!-- ListView用于展示新闻列表数据 -->
             <ListView
                 android:id="@+id/newsListView"
                 android:layout_width="match_parent"
@@ -37,6 +39,7 @@
 
         <!--放置右下角-->
 <!--        android:layout_gravity="bottom|end"：设置了按钮在父布局中的位置，使其位于父布局的底部右侧。-->
+        <!-- FloatingActionButton用于展示一个可点击的按钮，通常用于触发某些操作 -->
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fab"
             android:layout_width="wrap_content"
