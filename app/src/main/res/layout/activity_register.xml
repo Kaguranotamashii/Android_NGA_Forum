@@ -11,13 +11,13 @@
         android:layout_height="100dp"
         android:layout_marginTop="20dp"
         android:orientation="horizontal">
-
+        <!-- 定义一个圆形图片视图，用于显示应用图标 -->
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/login_logo"
             android:layout_width="101dp"
             android:layout_height="match_parent"
             android:src="@drawable/akl" />
-
+        <!-- 定义一个文本视图，用于显示文本标题 -->
         <TextView
             android:id="@+id/textview_login"
             android:layout_width="189dp"
@@ -31,7 +31,7 @@
             android:textStyle="bold" />
     </LinearLayout>
 
-
+    <!-- 定义一个输入框，用于输入注册账号 -->
     <EditText
         android:id="@+id/register_userAccount"
         android:layout_width="match_parent"
@@ -46,7 +46,7 @@
         android:singleLine="true"
         android:textColorHint="#D11857" />
 
-
+    <!-- 定义一个密码输入框，用于输入登录密码 -->
     <EditText
         android:id="@+id/register_pwd"
         android:layout_width="match_parent"
@@ -61,7 +61,7 @@
         android:singleLine="true"
         android:maxLines="1"
         />
-
+    <!-- 定义一个确认密码输入框，用于再次输入登录密码 -->
     <EditText
         android:id="@+id/confirm_pwd"
         android:layout_width="match_parent"
@@ -76,7 +76,7 @@
         android:singleLine="true"
         android:maxLines="1"
         />
-
+    <!-- 定义一个按钮，用于提交注册信息 -->
     <Button
         android:id="@+id/register_click"
         android:layout_width="match_parent"
