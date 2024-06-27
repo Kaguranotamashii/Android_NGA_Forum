@@ -9,7 +9,7 @@
         android:id="@+id/article_edit_toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="?attr/colorPrimary"
+        android:background="@color/colorAccent"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
         app:layout_scrollFlags="scroll|enterAlways|snap"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
@@ -59,10 +59,9 @@
         android:id="@+id/edit_publish"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorPrimary"
-        android:textColor="@color/colorWhite"
+        android:background="@color/colorAccent"
         android:text="发布"
-        android:textSize="18sp"
-        />
+        android:textColor="@color/colorWhite"
+        android:textSize="18sp" />
 
 </LinearLayout>
