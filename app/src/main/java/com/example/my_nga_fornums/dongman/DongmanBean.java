@@ -1,5 +1,7 @@
 package com.example.my_nga_fornums.dongman;
 
+import android.widget.ImageView;
+
 public class DongmanBean {
     private String id;
     private String name;
