@@ -32,16 +32,16 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         registerBtn.setOnClickListener(this);
     }
     @Override
-    public void onClick(View view){
+    public void onClick(View v){
 
-        EditText userAccount = findViewById(R.id.login_userAccount);
-        EditText userPwd = findViewById(R.id.login_pwd);
+        EditText userAccount = v.findViewById(R.id.login_userAccount);
+        EditText userPwd = v.findViewById(R.id.login_pwd);
 
         String userid = userAccount.getText().toString();
         String uspwd = userPwd.getText().toString();
 
         Log.i("a", userid+" "+uspwd);
-        if(view.getId()==loginBtn.getId()){
+        if(v.getId()==loginBtn.getId()){
             // 先判断输入不能为空
             if(userid.isEmpty()|| uspwd.isEmpty()){
                 Toast.makeText(LoginActivity.this, "输入不能为空", Toast.LENGTH_SHORT).show();
@@ -70,7 +70,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 }
             }
         }
-        else if(view.getId()==registerBtn.getId()){
+        else if(v.getId()==registerBtn.getId()){
             //此处跳转到注册页面
             Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
             // 注册请求码是2
