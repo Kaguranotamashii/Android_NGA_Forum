@@ -38,7 +38,6 @@ import java.util.List;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
-
 public class NewsFragment extends Fragment {
     private ListView newsListView;
     private SwipeRefreshLayout swipeRefreshLayout;
@@ -111,6 +110,7 @@ public class NewsFragment extends Fragment {
             @Override
             public void onScrollStateChanged(AbsListView view, int scrollState) {
                 if (scrollState == SCROLL_STATE_IDLE && newsListView.getLastVisiblePosition() == contentItems.size() - 1 && !isLoading) {
+                    swipeRefreshLayout.setRefreshing(true); // 显示刷新动画
                     loadMoreData();
                 }
             }
@@ -125,14 +125,19 @@ public class NewsFragment extends Fragment {
         int end = Math.min(start + pageSize, allNewsItems.size());
         if (start < end) {
             isLoading = true;
-            contentItems.addAll(allNewsItems.subList(start, end));
-            if (adapter == null) {
-                adapter = new TabAdapter(getActivity(), contentItems);
-                newsListView.setAdapter(adapter);
-            } else {
-                adapter.notifyDataSetChanged();
-            }
-            isLoading = false;
+            new Handler().postDelayed(() -> {
+                contentItems.addAll(allNewsItems.subList(start, end));
+                if (adapter == null) {
+                    adapter = new TabAdapter(getActivity(), contentItems);
+                    newsListView.setAdapter(adapter);
+                } else {
+                    adapter.notifyDataSetChanged();
+                }
+                swipeRefreshLayout.setRefreshing(false); // 隐藏刷新动画
+                isLoading = false;
+            }, 1500); // 模拟网络延迟
+        } else {
+            swipeRefreshLayout.setRefreshing(false); // 隐藏刷新动画
         }
     }
 

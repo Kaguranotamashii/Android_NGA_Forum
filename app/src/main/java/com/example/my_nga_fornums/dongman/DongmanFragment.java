@@ -2,6 +2,7 @@ package com.example.my_nga_fornums.dongman;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -103,29 +104,38 @@ public class DongmanFragment extends Fragment {
         String url = "https://api.bgm.tv/subject/";
         for (int i = 1; i < 6; i++) {
             //生成1-10000的随机数
-            int a = (int) (Math.random()*10000+1);
+            int a = (int) (Math.random()*100+1);
             url = url + a;
-            //todo 多线程
-//            new Thread(new Runnable() {
-//                @Override
-//                public void run() {
-//                    try {
-//                        // 创建 OkHttpClient
-//                        OkHttpClient client = new OkHttpClient();
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//                    } catch (IOException e) {
-//                        e.printStackTrace();
-//                    }
-//                }
-//            }).start();
+            String finalUrl = url;
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        // 创建 OkHttpClient
+                        OkHttpClient client = new OkHttpClient();
+                        Request request = new Request.Builder()
+                                .url(finalUrl)
+                                .build();
+                        Response response = client.newCall(request).execute();
+                        if (response.isSuccessful()) {
+                            String responseData = response.body().string();
+                            Log.d("数据", "run: " + responseData);
+
+                        }
+
+
+
+
+
+
+
+
+
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }).start();
 
         }
 
