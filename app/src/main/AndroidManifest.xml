@@ -14,14 +14,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-<!--        <activity android:name="com.example.my_nga_fornums.usermodel.EditArticleActivity"></activity>-->
-<!--        <activity android:name="com.example.my_nga_fornums.usermodel.ArticleDetailActivity" />-->
-<!--        <activity android:name="com.example.my_nga_fornums.usermodel.ArticleActivity" />-->
-<!--        <activity android:name="com.example.my_nga_fornums.usermodel.UserFavoriteActivity" />-->
-<!--        <activity android:name="com.example.my_nga_fornums.usermodel.UserDetailActivity" />-->
-<!--        <activity android:name="com.example.my_nga_fornums.usermodel.RegisterActivity" />-->
-<!--        <activity android:name="com.example.my_nga_fornums.usermodel.LoginActivity" />-->
-<!--        <activity android:name="com.example.my_nga_fornums.WebActivity" />-->
+        <activity android:name="com.example.my_nga_fornums.Article.EditArticleActivity"></activity>
+        <activity android:name="com.example.my_nga_fornums.Article.ArticleDetailActivity" />
+        <activity android:name="com.example.my_nga_fornums.Article.ArticleActivity" />
+        <activity android:name="com.example.my_nga_fornums.user.UserFavoriteActivity" />
+        <activity android:name="com.example.my_nga_fornums.user.UserDetailActivity" />
+        <activity android:name="com.example.my_nga_fornums.user.RegisterActivity" />
+        <activity android:name="com.example.my_nga_fornums.user.LoginActivity" />
+        <activity android:name="com.example.my_nga_fornums.news.WebActivity" />
         <!--
             使用singleTask会在返回栈中检查是否存在该活动实例，
         若存在则直接使用该实例，并把这个活动之上的所有活动统统出栈，
