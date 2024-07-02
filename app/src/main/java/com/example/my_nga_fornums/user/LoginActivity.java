@@ -8,6 +8,7 @@ import com.example.my_nga_fornums.tools.BaseActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -34,16 +35,15 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     @Override
     public void onClick(View v){
 
-        EditText userAccount = v.findViewById(R.id.login_userAccount);
-        EditText userPwd = v.findViewById(R.id.login_pwd);
+        EditText userAccount = findViewById(R.id.login_userAccount);
+        EditText userPwd = findViewById(R.id.login_pwd);
 
         String userid = userAccount.getText().toString();
         String uspwd = userPwd.getText().toString();
 
-        Log.i("a", userid+" "+uspwd);
         if(v.getId()==loginBtn.getId()){
             // 先判断输入不能为空
-            if(userid.isEmpty()|| uspwd.isEmpty()){
+            if(userid.isEmpty() || uspwd.isEmpty()){
                 Toast.makeText(LoginActivity.this, "输入不能为空", Toast.LENGTH_SHORT).show();
             }
             else{

@@ -18,18 +18,21 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+
+        registerBtn = this.findViewById(R.id.register_click);
         registerBtn.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View v) {
-        EditText userAccount = v.findViewById(R.id.register_userAccount);
-        EditText userPwd = v.findViewById(R.id.register_pwd);
-        EditText userRePwd = v.findViewById(R.id.confirm_pwd);
+
+        EditText userAccount = findViewById(R.id.register_userAccount);
+        EditText userPwd = findViewById(R.id.register_pwd);
+        EditText userRePwd = findViewById(R.id.confirm_pwd);
 
         String userid = userAccount.getText().toString();
         String uspwd = userPwd.getText().toString();
-        String usrepwd = userPwd.getText().toString();
+        String usrepwd = userRePwd.getText().toString();
 
         if(userid.isEmpty() || uspwd.isEmpty() || usrepwd.isEmpty()) {
             // 判断字符串是否为null或者""
