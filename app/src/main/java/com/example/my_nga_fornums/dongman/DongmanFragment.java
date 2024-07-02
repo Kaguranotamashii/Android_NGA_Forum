@@ -2,7 +2,6 @@ package com.example.my_nga_fornums.dongman;
 
 import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -216,6 +215,13 @@ public class DongmanFragment extends Fragment {
         });
     }
 
+    @Override
+    public void onActivityCreated( @Nullable Bundle savedInstanceState) {
 
+        super.onActivityCreated(savedInstanceState);
+        onAttach(getContext());
+
+
+    }
 
 }

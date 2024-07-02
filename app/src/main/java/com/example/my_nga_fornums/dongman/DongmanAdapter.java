@@ -1,6 +1,7 @@
 package com.example.my_nga_fornums.dongman;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.my_nga_fornums.R;
 
+
 import java.util.List;
 
 public class DongmanAdapter extends RecyclerView.Adapter<DongmanAdapter.DongmanViewHolder> {
@@ -20,7 +22,7 @@ public class DongmanAdapter extends RecyclerView.Adapter<DongmanAdapter.DongmanV
     private List<DongmanBean> list;
     private Context context;
 
-    public DongmanAdapter(List<DongmanBean> list, Context context){
+    public DongmanAdapter(List<DongmanBean> list, Context context) {
         this.list = list;
         this.context = context;
     }
@@ -44,6 +46,13 @@ public class DongmanAdapter extends RecyclerView.Adapter<DongmanAdapter.DongmanV
                 .placeholder(R.drawable.ic_vertical_align_top)  // 占位符
                 .error(R.drawable.ic_edit_article)             // 加载失败时显示的图片
                 .into(holder.image);
+
+        // 设置点击监听器
+        holder.itemView.setOnClickListener(v -> {
+            Intent intent = new Intent(context, DongmanWebActivity.class);
+            intent.putExtra("pageUrl", "https://www.bing.com/search?q="+item.getName());  // 传递 URL
+            context.startActivity(intent);
+        });
     }
 
     @Override
@@ -60,7 +69,6 @@ public class DongmanAdapter extends RecyclerView.Adapter<DongmanAdapter.DongmanV
             name = itemView.findViewById(R.id.textViewName);
             summary = itemView.findViewById(R.id.textViewContent);
             image = itemView.findViewById(R.id.imageView);
-
         }
     }
 }
