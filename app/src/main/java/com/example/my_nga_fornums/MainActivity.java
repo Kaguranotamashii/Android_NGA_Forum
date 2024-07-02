@@ -29,6 +29,7 @@ import com.afollestad.materialdialogs.MaterialDialog;
 
 import com.example.my_nga_fornums.Article.ArticleActivity;
 import com.example.my_nga_fornums.dongman.DongmanFragment;
+import com.example.my_nga_fornums.news.NewsFragment;
 import com.example.my_nga_fornums.tools.BaseActivity;
 import com.example.my_nga_fornums.user.LoginActivity;
 import com.example.my_nga_fornums.user.UserDetailActivity;
@@ -168,17 +169,15 @@ public class MainActivity extends BaseActivity {
                 String tabTitle = list.get(position);
                 Fragment fragment = null;
                 Bundle bundle = new Bundle();
-                fragment = new DongmanFragment();
-                bundle.putString("name", "shehui");
-//                if (tabTitle.equals("ACG新闻")) {
-////                    fragment = new NewsFragment();
-//                    bundle.putString("name", "top");
-//                } else if (tabTitle.equals("随机一图")) {
-//                    fragment = new DongmanFragment();
-//                    bundle.putString("name", "shehui");
-//                } else {
-////                    fragment = new NewsFragment(); // 默认的Fragment
-//                }
+                if (tabTitle.equals("ACG新闻")) {
+                    fragment = new NewsFragment();
+                    bundle.putString("name", "top");
+                } else if (tabTitle.equals("随机一图")) {
+                    fragment = new DongmanFragment();
+                    bundle.putString("name", "shehui");
+                } else {
+//                    fragment = new NewsFragment(); // 默认的Fragment
+                }
 
                 fragment.setArguments(bundle);
                 return fragment;

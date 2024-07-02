@@ -20,10 +20,16 @@ import com.youth.banner.adapter.BannerImageAdapter;
 import com.youth.banner.holder.BannerImageHolder;
 import com.youth.banner.indicator.CircleIndicator;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Random;
 import java.util.Set;
+
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 public class DongmanFragment extends Fragment {
     private Banner banner;
@@ -48,10 +54,12 @@ public class DongmanFragment extends Fragment {
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(mAdapter);
 
-        for (int i = 0; i < 50; i++) {
+        initImagesData();
+        for (int i = 0; i < 5; i++) {
             DongmanBean item = new DongmanBean();
             item.setName("新闻" + i);
             item.setSummary("摘要" + i);
+            item.setImage("https://www.baidu.com/img/PCtm_d9c8750bed0b3c7d089fa7d55720d6cf.png");
 
             mNewsList.add(item);
         }
@@ -89,6 +97,38 @@ public class DongmanFragment extends Fragment {
         });
 
         return view;
+    }
+
+    private void initImagesData() {
+        String url = "https://api.bgm.tv/subject/";
+        for (int i = 1; i < 6; i++) {
+            //生成1-10000的随机数
+            int a = (int) (Math.random()*10000+1);
+            url = url + a;
+            //todo 多线程
+//            new Thread(new Runnable() {
+//                @Override
+//                public void run() {
+//                    try {
+//                        // 创建 OkHttpClient
+//                        OkHttpClient client = new OkHttpClient();
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//                    } catch (IOException e) {
+//                        e.printStackTrace();
+//                    }
+//                }
+//            }).start();
+
+        }
+
     }
 
     private void initData() {
