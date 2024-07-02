@@ -27,7 +27,12 @@ import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 
+import com.example.my_nga_fornums.Article.ArticleActivity;
+import com.example.my_nga_fornums.dongman.DongmanFragment;
 import com.example.my_nga_fornums.tools.BaseActivity;
+import com.example.my_nga_fornums.user.LoginActivity;
+import com.example.my_nga_fornums.user.UserDetailActivity;
+import com.example.my_nga_fornums.user.UserFavoriteActivity;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabLayout;
 
@@ -62,6 +67,8 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        //打印日志
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         toolbar = findViewById(R.id.toolbar);
@@ -101,10 +108,48 @@ public class MainActivity extends BaseActivity {
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-                //TODO 逻辑页面处理
-
-                return false;
-
+                //逻辑页面处理
+                mDrawerLayout.closeDrawers();
+                int itemId = menuItem.getItemId();
+                if (itemId == R.id.nav_edit) {//每个菜单项的点击事件，通过Intent实现点击item简单实现活动页面的跳转。
+                    if (!TextUtils.isEmpty(currentUserId)) {
+                        Intent editIntent = new Intent(MainActivity.this, UserDetailActivity.class);
+                        editIntent.putExtra("user_edit_id", currentUserId);
+                        startActivityForResult(editIntent, 3);
+                    } else {
+                        Intent loginIntent = new Intent(MainActivity.this, LoginActivity.class);
+                        loginIntent.putExtra("loginStatus", "请先登录后才能操作！");
+                        startActivityForResult(loginIntent, 1);
+                    }
+                } else if (itemId == R.id.nav_articles) {// 我发布的文章
+                    if (!TextUtils.isEmpty(currentUserId)) {
+                        Intent editIntent = new Intent(MainActivity.this, ArticleActivity.class);
+                        editIntent.putExtra("user_article_id", currentUserId);
+                        startActivityForResult(editIntent, 6);
+                    } else {
+                        Intent loginIntent = new Intent(MainActivity.this, LoginActivity.class);
+                        loginIntent.putExtra("loginStatus", "请先登录后才能操作！");
+                        startActivityForResult(loginIntent, 1);
+                    }
+                } else if (itemId == R.id.nav_favorite) {
+                    if (!TextUtils.isEmpty(currentUserId)) {
+                        Intent loveIntent = new Intent(MainActivity.this, UserFavoriteActivity.class);
+                        loveIntent.putExtra("user_love_id", currentUserId);
+                        startActivity(loveIntent);
+                    } else {
+                        Intent loginIntent = new Intent(MainActivity.this, LoginActivity.class);
+                        loginIntent.putExtra("loginStatus", "请先登录后才能操作！");
+                        startActivityForResult(loginIntent, 1);
+                    }
+                } else if (itemId == R.id.nav_clear_cache) {// 清除缓存
+                    // Toast.makeText(MainActivity.this,"你点击了清除缓存，下步实现把",Toast.LENGTH_SHORT).show();
+//                    clearCacheData();
+                } else if (itemId == R.id.nav_switch) {// 切换账号
+                    Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                    // 登录请求码是1
+                    startActivityForResult(intent, 1);
+                }
+                return true;
             }
         });
         //设置tab标题
@@ -112,7 +157,49 @@ public class MainActivity extends BaseActivity {
         list.add("随机一图");
 
 //TODO 根据不同页面碎片响应
+        viewPager.setAdapter(new FragmentStatePagerAdapter(getSupportFragmentManager(), FragmentStatePagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
+            @Nullable
+            @Override
+            public CharSequence getPageTitle(int position) {
+                return list.get(position);
+            }
+            @Override
+            public Fragment getItem(int position) {
+                String tabTitle = list.get(position);
+                Fragment fragment = null;
+                Bundle bundle = new Bundle();
+                fragment = new DongmanFragment();
+                bundle.putString("name", "shehui");
+//                if (tabTitle.equals("ACG新闻")) {
+////                    fragment = new NewsFragment();
+//                    bundle.putString("name", "top");
+//                } else if (tabTitle.equals("随机一图")) {
+//                    fragment = new DongmanFragment();
+//                    bundle.putString("name", "shehui");
+//                } else {
+////                    fragment = new NewsFragment(); // 默认的Fragment
+//                }
 
+                fragment.setArguments(bundle);
+                return fragment;
+            }
+
+            @NonNull
+            @Override
+            public Object instantiateItem(@NonNull ViewGroup container, int position) {
+                return super.instantiateItem(container, position);
+            }
+
+            @Override
+            public int getItemPosition(@NonNull Object object) {
+                return FragmentStatePagerAdapter.POSITION_NONE;
+            }
+
+            @Override
+            public int getCount() {
+                return list.size();
+            }
+        });
 
         tabLayout.setupWithViewPager(viewPager);
 
