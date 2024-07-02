@@ -70,8 +70,8 @@ dependencies {
 
     //网络请求
     implementation 'com.squareup.okhttp3:okhttp:3.10.0'
-
-
+    //在 build.gradle 中添加最新版本的字库依赖
+    implementation 'androidx.core:core:1.5.0'
 
 
     implementation 'androidx.annotation:annotation:1.1.0'
