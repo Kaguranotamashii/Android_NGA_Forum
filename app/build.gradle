@@ -61,6 +61,18 @@ dependencies {
 
     // 引入卡片式布局的依赖库
     implementation 'androidx.cardview:cardview:1.0.0'
+    // 引入轮播图依赖库
+    implementation 'io.github.youth5201314:banner:2.2.2'
+    implementation 'androidx.viewpager2:viewpager2:1.0.0'
+    implementation 'com.android.support:support-v4:28.0.0' // 请根据需要替换为具体版本号
+    implementation 'androidx.viewpager:viewpager:1.0.0'
+
+
+    //网络请求
+    implementation 'com.squareup.okhttp3:okhttp:3.10.0'
+
+
+
 
     implementation 'androidx.annotation:annotation:1.1.0'
     implementation 'androidx.lifecycle:lifecycle-extensions:2.1.0'
