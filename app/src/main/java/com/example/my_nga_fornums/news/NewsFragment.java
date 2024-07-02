@@ -80,6 +80,8 @@ public class NewsFragment extends Fragment {
         return view;
     }
 
+
+    //
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
@@ -95,6 +97,7 @@ public class NewsFragment extends Fragment {
 
         getDataFromNet();
 
+        //跳转到web里面
         newsListView.setOnItemClickListener((parent, view, position, id) -> {
             String url = contentItems.get(position).getUrl();
             String uniquekey = contentItems.get(position).getUniquekey();

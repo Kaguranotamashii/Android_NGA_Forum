@@ -22,6 +22,7 @@
         <activity android:name="com.example.my_nga_fornums.user.RegisterActivity" />
         <activity android:name="com.example.my_nga_fornums.user.LoginActivity" />
         <activity android:name="com.example.my_nga_fornums.news.WebActivity" />
+        <activity android:name=".dongman.DongmanWebActivity"/>
         <!--
             使用singleTask会在返回栈中检查是否存在该活动实例，
         若存在则直接使用该实例，并把这个活动之上的所有活动统统出栈，
