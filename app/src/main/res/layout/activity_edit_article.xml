@@ -57,7 +57,7 @@
         />
 
     <Button
-        android:id="@+id/edit_publish"
+        android:id="@+id/edit_publishBtn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/colorAccent"
