@@ -30,10 +30,13 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.example.my_nga_fornums.Article.ArticleActivity;
 import com.example.my_nga_fornums.dongman.DongmanFragment;
 import com.example.my_nga_fornums.news.NewsFragment;
+import com.example.my_nga_fornums.tools.ActivityCollector;
 import com.example.my_nga_fornums.tools.BaseActivity;
+
 import com.example.my_nga_fornums.user.LoginActivity;
 import com.example.my_nga_fornums.user.UserDetailActivity;
 import com.example.my_nga_fornums.user.UserFavoriteActivity;
+import com.example.my_nga_fornums.user.UserInfo;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabLayout;
 
@@ -68,8 +71,6 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        //打印日志
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         toolbar = findViewById(R.id.toolbar);
@@ -86,12 +87,19 @@ public class MainActivity extends BaseActivity {
         tabLayout = (TabLayout) findViewById(R.id.tabLayout);
         viewPager = (ViewPager) findViewById(R.id.viewPager);
         list = new ArrayList<>();
+
+        //设置tab标题
+        list.add("ACG新闻");
+        list.add("随机一图");
+
+
     }
 
     //在活动由不可见变为可见的时候调用
     @Override
     protected void onStart() {
         super.onStart();
+        //设置标题栏的logo
         toolbar.setLogo(R.drawable.tubiao);
         //设置标题栏标题
         toolbar.setTitle("A岛");
@@ -105,6 +113,8 @@ public class MainActivity extends BaseActivity {
             //设置Indicator来添加一个点击图标（默认图标是一个返回的箭头）
             actionBar.setHomeAsUpIndicator(R.drawable.ic_menu);
         }
+        //设置默认选中第一个
+        navigationView.setCheckedItem(R.id.nav_edit);
         //设置菜单项的监听事件
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -153,11 +163,11 @@ public class MainActivity extends BaseActivity {
                 return true;
             }
         });
-        //设置tab标题
-        list.add("ACG新闻");
-        list.add("随机一图");
 
-//TODO 根据不同页面碎片响应
+
+        //表示ViewPager（默认）预加载一页
+        //viewPager.setOffscreenPageLimit(1);
+
         viewPager.setAdapter(new FragmentStatePagerAdapter(getSupportFragmentManager(), FragmentStatePagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
             @Nullable
             @Override
@@ -167,8 +177,9 @@ public class MainActivity extends BaseActivity {
             @Override
             public Fragment getItem(int position) {
                 String tabTitle = list.get(position);
-                Fragment fragment = null;
+                Fragment fragment;
                 Bundle bundle = new Bundle();
+
                 if (tabTitle.equals("ACG新闻")) {
                     fragment = new NewsFragment();
                     bundle.putString("name", "top");
@@ -176,7 +187,7 @@ public class MainActivity extends BaseActivity {
                     fragment = new DongmanFragment();
                     bundle.putString("name", "shehui");
                 } else {
-//                    fragment = new NewsFragment(); // 默认的Fragment
+                    fragment = new NewsFragment(); // 默认的Fragment
                 }
 
                 fragment.setArguments(bundle);
@@ -202,8 +213,27 @@ public class MainActivity extends BaseActivity {
 
         tabLayout.setupWithViewPager(viewPager);
 
-        // TODO 加载上次登录的账号，起到记住会话的功能
-
+        // 加载上次登录的账号，起到记住会话的功能
+        String inputText = load();
+        if (!TextUtils.isEmpty(inputText) && TextUtils.isEmpty(currentUserId)) {
+            currentUserId = inputText;
+        }
+        View v = navigationView.getHeaderView(0);
+        userNickName = v.findViewById(R.id.text_nickname);
+        userSignature = v.findViewById(R.id.text_signature);
+        userAvatar = v.findViewById(R.id.icon_image);
+        if (!TextUtils.isEmpty(currentUserId)) {
+            List<UserInfo> userInfos = LitePal.where("userAccount = ?", currentUserId).find(UserInfo.class);
+            userNickName.setText(userInfos.get(0).getNickName());
+            userSignature.setText(userInfos.get(0).getUserSignature());
+            currentImagePath = userInfos.get(0).getImagePath();
+            System.out.println("主界面初始化数据：" + userInfos);
+            diplayImage(currentImagePath);
+        } else {
+            userNickName.setText("请先登录");
+            userSignature.setText("请先登录");
+            userAvatar.setImageResource(R.drawable.no_login_avatar);
+        }
     }
 
     // 解析、展示图片
@@ -233,6 +263,10 @@ public class MainActivity extends BaseActivity {
                     currentUserNickName = data.getStringExtra("userNick");
                     currentSignature = data.getStringExtra("userSign");
                     currentImagePath = data.getStringExtra("imagePath");
+                    Log.d(TAG, "当前用户的账号为：" + currentUserId);
+                    Log.d(TAG, "当前用户的昵称为：" + currentUserNickName);
+                    Log.d(TAG, "当前用户的个性签名为： " + currentSignature);
+                    Log.d(TAG, "当前用户的头像地址为: " + currentImagePath);
                     userNickName.setText(currentUserNickName);
                     userSignature.setText(currentSignature);
                     diplayImage(currentImagePath);
@@ -243,6 +277,10 @@ public class MainActivity extends BaseActivity {
                     currentUserNickName = data.getStringExtra("nickName");
                     currentSignature = data.getStringExtra("signature");
                     currentImagePath = data.getStringExtra("imagePath");
+                    Log.d(TAG, "当前用户的昵称为：" + currentUserNickName);
+                    Log.d(TAG, "当前用户的个性签名为： " + currentSignature);
+                    Log.d(TAG, "当前用户的图片路径为： " + currentImagePath);
+                    System.out.println("当前用户的图片路径为： " + currentImagePath);
                     userNickName.setText(currentUserNickName);
                     userSignature.setText(currentSignature);
                     diplayImage(currentImagePath);
@@ -254,7 +292,35 @@ public class MainActivity extends BaseActivity {
     }
 
 
- //TODO 缓存功能？
+//    public void clearCacheData() {
+//        // 缓存目录为 /data/user/0/com.example.viewnews/cache
+//        File file = new File(MainActivity.this.getCacheDir().getPath());
+//        System.out.println("缓存目录为：" + MainActivity.this.getCacheDir().getPath());
+//        String cacheSize = null;
+//        try {
+//            cacheSize = DataCleanManager.getCacheSize(file);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//        System.out.println("缓存大小为：" + cacheSize);
+//        new MaterialDialog.Builder(MainActivity.this)
+//                .title("提示")
+//                .content("当前缓存大小一共为" + cacheSize + "。确定要删除所有缓存？离线内容及其图片均会被清除。")
+//                .positiveText("确认")
+//                .onPositive(new MaterialDialog.SingleButtonCallback() {
+//                    @Override
+//                    public void onClick(MaterialDialog dialog, DialogAction which) {
+//                        // dialog 此弹窗实例共享父实例
+//                        System.out.println("点击了啥内容：" + which);
+//                        // 没起作用
+//                        DataCleanManager.cleanInternalCache(MainActivity.this);
+//                        Toast.makeText(MainActivity.this, "成功清除缓存。", Toast.LENGTH_SHORT).show();
+//                    }
+//                })
+//                .negativeText("取消")
+//                .show();
+//
+//    }
 
     //加载标题栏的菜单布局
     @Override
@@ -264,16 +330,13 @@ public class MainActivity extends BaseActivity {
         return true;
     }
 
-//    根据点击的菜单项ID执行相应的操作，如打开侧滑菜单、显示用户反馈对话框、退出应用。
+    //监听标题栏的菜单item的选择事件
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // 获取点击的菜单项的ID
-        int itemId = item.getItemId();
-        if (itemId == android.R.id.home) {
-            // 打开侧滑菜单
+        int itemId = item.getItemId();//R.id.home修改导航按钮的点击事件为打开侧滑
+        if (itemId == android.R.id.home) {//打开侧滑栏，注意要与xml中保持一致START
             mDrawerLayout.openDrawer(GravityCompat.START);
-        } else if (itemId == R.id.userFeedback) {
-            //填写用户反馈
+        } else if (itemId == R.id.userFeedback) {//填写用户反馈
             new MaterialDialog.Builder(MainActivity.this)
                     .title("用户反馈")
                     .inputRangeRes(1, 50, R.color.colorBlack)
@@ -281,6 +344,7 @@ public class MainActivity extends BaseActivity {
                     .input(null, null, new MaterialDialog.InputCallback() {
                         @Override
                         public void onInput(MaterialDialog dialog, CharSequence input) {
+                            System.out.println("反馈的内容为：" + input);
                             Toast.makeText(MainActivity.this, "反馈成功！反馈内容为：" + input, Toast.LENGTH_SHORT).show();
                         }
                     })
@@ -288,10 +352,10 @@ public class MainActivity extends BaseActivity {
                     .negativeText("取消")
                     .show();
         } else if (itemId == R.id.userExit) {
-            // 显示退出应用确认对话框
             SweetAlertDialog mDialog = new SweetAlertDialog(MainActivity.this, SweetAlertDialog.NORMAL_TYPE)
                     .setTitleText("提示")
                     .setContentText("您是否要退出？")
+                    .setCustomImage(null)
                     .setCancelText("取消")
                     .setConfirmText("确定")
                     .setCancelClickListener(new SweetAlertDialog.OnSweetClickListener() {
@@ -303,9 +367,7 @@ public class MainActivity extends BaseActivity {
                         @Override
                         public void onClick(SweetAlertDialog sweetAlertDialog) {
                             sweetAlertDialog.dismiss();
-                            //TODO 摧毁ActivityCollector中的所有Activity
-                            MainActivity.this.finish();
-
+                            ActivityCollector.finishAll();
                         }
                     });
             mDialog.show();
@@ -313,7 +375,33 @@ public class MainActivity extends BaseActivity {
         return true;
     }
 
-    //TODO 加载数据
-
-
+    // 加载数据
+    public String load() {
+        //读取我们之前存储到data文件中的账号，方便下次启动app时直接使用
+        FileInputStream in = null;
+        BufferedReader reader = null;
+        StringBuilder content = new StringBuilder();
+        try {
+            in = openFileInput("data");
+            System.out.println("是否读到文件内容" + in);
+            reader = new BufferedReader(new InputStreamReader(in));
+            String line = "";
+            while ((line = reader.readLine()) != null) {
+                content.append(line);
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (reader != null) {
+                try {
+                    reader.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return content.toString();
+    }
 }
