@@ -214,6 +214,7 @@ public class EditArticleActivity extends BaseActivity {
                     } else {
                         OpenAlbum();
                     }
+
                 } else {
                     // 安卓12及以下版本
                     if (ContextCompat.checkSelfPermission(EditArticleActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
