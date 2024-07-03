@@ -108,8 +108,14 @@ public class UserDetailActivity extends BaseActivity implements View.OnClickList
 
     }
     private void initData(String userId) {
-        List<UserInfo> infos = LitePal.where("userAccount = ?", userId).find(UserInfo.class);
-        userInfo = infos.get(0);
+        userInfo = new UserInfo();
+        userInfo.setNickName("syr");
+        userInfo.setUserSex("男");
+        userInfo.setUserBirthDay("2000-11-1");
+        userInfo.setUserSignature("hellow world");
+
+        //List<UserInfo> infos = LitePal.where("userAccount = ?", userId).find(UserInfo.class);
+        //userInfo = infos.get(0);
         System.out.println("用户详情界面的信息为" + userInfo);
         showNickName.setText(userInfo.getNickName());
         showSex.setText(userInfo.getUserSex());
@@ -125,29 +131,15 @@ public class UserDetailActivity extends BaseActivity implements View.OnClickList
 
         int layoutId = v.getId();
         if (layoutId == layout_avatar.getId()){
-            // 检查安卓版本，针对安卓13及以上版本和之前的版本分别处理
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                // 安卓13及以上版本
-                if (ContextCompat.checkSelfPermission(UserDetailActivity.this, Manifest.permission.READ_MEDIA_IMAGES) == PackageManager.PERMISSION_DENIED) {
-                    // 请求权限
-                    ActivityCompat.requestPermissions(UserDetailActivity.this, new String[]{Manifest.permission.READ_MEDIA_IMAGES}, 1);
-                } else {
-                    // 打开图库
-                    Intent intent = new Intent(Intent.ACTION_PICK, null);
-                    intent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI , "image/*");
-                    startActivityForResult(intent, OPEN_GALLERY_REQUEST_CODE);
-                }
-            } else {
-                // 安卓12及以下版本
-                if (ContextCompat.checkSelfPermission(UserDetailActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
-                    // 请求权限
-                    ActivityCompat.requestPermissions(UserDetailActivity.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 1);
-                } else {
-                    // 打开图库
-                    Intent intent = new Intent(Intent.ACTION_PICK, null);
-                    intent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI , "image/*");
-                    startActivityForResult(intent, OPEN_GALLERY_REQUEST_CODE);
-                }
+            //是否拥有存储内容获取权限
+            if (ContextCompat.checkSelfPermission(UserDetailActivity.this, Manifest.permission.READ_MEDIA_IMAGES) == PackageManager.PERMISSION_DENIED){
+                //请求存储内容获取权限
+                ActivityCompat.requestPermissions(UserDetailActivity.this, new String[]{Manifest.permission.READ_MEDIA_IMAGES}, 1);
+            }
+            else{
+                Intent intent = new Intent(Intent.ACTION_PICK, null);
+                intent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI , "image/*");
+                startActivityForResult(intent, OPEN_GALLERY_REQUEST_CODE);
             }
         }
         else if(layoutId == layout_nickname.getId()){
@@ -177,6 +169,8 @@ public class UserDetailActivity extends BaseActivity implements View.OnClickList
                     .itemsCallbackSingleChoice(userInfo.getUserSex().equals("女") ? 1 : 0,new MaterialDialog.ListCallbackSingleChoice() {
                         @Override
                         public boolean onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
+                            //System.out.println("选择哪一个" + which);
+                            //System.out.println("选择的内容是" + text);
                             userInfo.setUserSex(text.toString());
                             showSex.setText(userInfo.getUserSex());
                             return true;
@@ -255,7 +249,6 @@ public class UserDetailActivity extends BaseActivity implements View.OnClickList
         } else {
             userAvatar.setImageResource(R.drawable.akl);
         }
-        userInfo.setImagePath(imagePath);
     }
 
     @Override
