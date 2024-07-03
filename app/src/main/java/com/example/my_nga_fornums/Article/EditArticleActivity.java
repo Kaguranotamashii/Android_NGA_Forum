@@ -29,7 +29,6 @@ import androidx.core.content.ContextCompat;
 
 import com.example.my_nga_fornums.R;
 import com.example.my_nga_fornums.tools.BaseActivity;
-import com.example.my_nga_fornums.user.UserDetailActivity;
 import com.example.my_nga_fornums.user.UserInfo;
 
 import org.litepal.LitePal;
@@ -101,12 +100,11 @@ public class EditArticleActivity extends BaseActivity {
         // 设置图片点击监听器
         editImageView.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                if (ContextCompat.checkSelfPermission(EditArticleActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            public void onClick(View v) {
+                if (ContextCompat.checkSelfPermission(EditArticleActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED)
                     ActivityCompat.requestPermissions(EditArticleActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
-                } else {
+                else
                     OpenAlbum();
-                }
             }
         });
 

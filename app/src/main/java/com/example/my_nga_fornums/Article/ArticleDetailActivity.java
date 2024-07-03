@@ -150,7 +150,7 @@ public class ArticleDetailActivity extends BaseActivity {
         intent.setClass(ArticleDetailActivity.this, ArticleActivity.class);
         intent.putExtra("user_article_id", MainActivity.currentUserId);
         startActivity(intent);
-
+        finish();
     }
 
     @Override
