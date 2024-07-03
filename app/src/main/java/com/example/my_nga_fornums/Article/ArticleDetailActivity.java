@@ -57,11 +57,11 @@ public class ArticleDetailActivity extends BaseActivity {
         System.out.println("当前图片的地址为：" + articleImageId);
         System.out.println("当前文章的发布时间为：" + articleTime);
 
-        // ToolBar
+        // 设置工具栏
         Toolbar toolbar = (Toolbar) findViewById(R.id.article_detail_toolbar);
         setSupportActionBar(toolbar);
 
-        // ActionBar
+        // 启用HomeAsUp按钮
         ActionBar actionBar = getSupportActionBar();
         if(actionBar != null){
             actionBar.setDisplayHomeAsUpEnabled(true);
@@ -127,6 +127,7 @@ public class ArticleDetailActivity extends BaseActivity {
             @Override
             public  void run(){
                 try{
+                    // 构建请求
                     OkHttpClient client = new OkHttpClient();
                     String url = "http://101.42.105.71:9999/article/delete?Id=" + articleTitle;
                     Request request = new Request.Builder()
@@ -134,6 +135,7 @@ public class ArticleDetailActivity extends BaseActivity {
                             .get()
                             .build();
 
+                    // 执行请求
                     Response response = client.newCall(request).execute();
                     assert response.body() != null;
                     String responseData = response.body().string();
@@ -155,7 +157,7 @@ public class ArticleDetailActivity extends BaseActivity {
     public boolean onOptionsItemSelected(MenuItem item){
         // 如果点击的是HomeAsUp按钮
         switch (item.getItemId()) {
-            case android.R.id.home:  //id不要写错，前面要加android
+            case android.R.id.home:
                 onBackPressed();
                 break;
         }

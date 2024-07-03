@@ -8,7 +8,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -18,47 +17,41 @@ import com.example.my_nga_fornums.R;
 
 import java.util.List;
 
-// 管理RecyclerView的数据和视图的adapter类
+// ArticleAdapter类用于管理RecyclerView的数据和视图
 public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.ViewHolder>{
-    private  static  final String Tag = "ArticleAdapter";
-    // 上下文对象，用于启动新活动
-    private  Context context;
-    // 文章的数据
-    private  List<Article> articleList;
-
-    // 构造函数
-    public ArticleAdapter(List<Article> myArticalList) {
-        articleList = myArticalList;
+    private static final String TAG = "ArticleAdapter";
+    private Context context;
+    private List<Article> articleList;
+    // ArticleAdapter的构造函数，传入文章列表数据
+    public ArticleAdapter(List<Article> myarticleList) {
+        articleList = myarticleList;
     }
 
-     protected static class ViewHolder extends RecyclerView.ViewHolder {
+    // ViewHolder内部类，用于绑定RecyclerView中的视图元素
+    static class ViewHolder extends RecyclerView.ViewHolder {
         CardView cardView;
         ImageView articleImage;
         TextView articleTitle;
         TextView articleTime;
 
-        // 初始化视图元素
+        // ViewHolder的构造函数，初始化视图元素
         public ViewHolder(View view) {
             super(view);
-            // 将传入的View作为CardView使用
             cardView = (CardView) view;
             articleImage = (ImageView) view.findViewById(R.id.article_image);
             articleTitle = (TextView) view.findViewById(R.id.article_name);
             articleTime = (TextView) view.findViewById(R.id.article_time);
         }
     }
-
     // 创建ViewHolder并返回，关联item_article布局文件
-    @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        if(context == null)
+    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        if (context == null) {
             context = parent.getContext();
-
-        // 获取item_article的布局文件
-        View view = LayoutInflater.from(context).inflate(R.layout.item_article,parent,false);
+        }
+        // 加载item_article布局文件，创建一个新的View
+        View view = LayoutInflater.from(context).inflate(R.layout.item_article, parent, false);
         final ViewHolder holder = new ViewHolder(view);
-
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v){
@@ -66,13 +59,13 @@ public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.ViewHold
                 Article article = articleList.get(position);
 
                 // 创建一个新的Intent，跳转到ArticleDetailActivity，并传递文章相关数据
-                Intent intent = new Intent(context, ArticleAdapter.class);
+                Intent intent = new Intent(context, ArticleDetailActivity.class);
+                intent.putExtra(ArticleDetailActivity.ARTICLE_IMAGE_ID, article.getArticleImagePath());
                 intent.putExtra(ArticleDetailActivity.ARTICLE_TITLE, article.getArticleTitle());
                 intent.putExtra(ArticleDetailActivity.ARTICLE_TIME, article.getArticleTime());
-                intent.putExtra(ArticleDetailActivity.ARTICLE_IMAGE_ID, article.getArticleImagePath());
+                context.startActivity(intent);
             }
         });
-
         return holder;
     }
 
@@ -96,5 +89,4 @@ public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.ViewHold
     public int getItemCount() {
         return articleList.size();
     }
-
 }

@@ -54,9 +54,6 @@ public class WebActivity extends BaseActivity {
         pageUniquekey = getIntent().getStringExtra("uniquekey");
         pageTtile = getIntent().getStringExtra("news_title");
 
-        System.out.println("当前新闻id为：" + pageUniquekey);
-        System.out.println("当前新闻标题为：" + pageTtile);
-
         // 通过WebView中的getSettings方法获得一个WebSettings对象
         WebSettings settings = webView.getSettings();
 
@@ -96,16 +93,16 @@ public class WebActivity extends BaseActivity {
 
             @Override
             public void onPageStarted(WebView view, String url, Bitmap favicon) {
-//                super.onPageStarted(view, url, favicon);
-//                // 页面开始加载时就去查看收藏表中是否有对应的记录，组合键（账号和新闻号）
-//                List<NewsCollectBean> beanList = LitePal.where("userIdNumer = ? AND newsId = ?", MainActivity.currentUserId == null ? "" : MainActivity.currentUserId, pageUniquekey).find(NewsCollectBean.class);
-//                // 获取收藏按钮
-//                MenuItem u = commentToolBar.getMenu().getItem(0);
-//                if(beanList.size() > 0) {
-//                    u.setIcon(R.drawable.ic_star_border_favourite_yes);
-//                } else {
-//                    u.setIcon(R.drawable.ic_star_border_favourite_no);
-//                }
+                super.onPageStarted(view, url, favicon);
+                // 页面开始加载时就去查看收藏表中是否有对应的记录，组合键（账号和新闻号）
+                List<NewsCollectBean> beanList = LitePal.where("userIdNumer = ? AND newsId = ?", MainActivity.currentUserId == null ? "" : MainActivity.currentUserId, pageUniquekey).find(NewsCollectBean.class);
+                // 获取收藏按钮
+                MenuItem u = commentToolBar.getMenu().getItem(0);
+                if(beanList.size() > 0) {
+                    u.setIcon(R.drawable.ic_star_border_favourite_yes);
+                } else {
+                    u.setIcon(R.drawable.ic_star_border_favourite_no);
+                }
             }
 
             // 在页面加载结束时调用
