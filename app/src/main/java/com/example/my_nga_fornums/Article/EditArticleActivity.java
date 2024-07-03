@@ -30,6 +30,7 @@ import androidx.core.content.ContextCompat;
 
 import com.example.my_nga_fornums.R;
 import com.example.my_nga_fornums.tools.BaseActivity;
+import com.example.my_nga_fornums.user.UserDetailActivity;
 import com.example.my_nga_fornums.user.UserInfo;
 
 import org.litepal.LitePal;
@@ -102,10 +103,25 @@ public class EditArticleActivity extends BaseActivity {
         editImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (ContextCompat.checkSelfPermission(EditArticleActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED)
-                    ActivityCompat.requestPermissions(EditArticleActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
-                else
-                    OpenAlbum();
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                    // 安卓13及以上版本
+                    if (ContextCompat.checkSelfPermission(EditArticleActivity.this, Manifest.permission.READ_MEDIA_IMAGES) == PackageManager.PERMISSION_DENIED) {
+                        // 请求权限
+                        ActivityCompat.requestPermissions(EditArticleActivity.this, new String[]{Manifest.permission.READ_MEDIA_IMAGES}, 1);
+                    } else {
+                        // 打开图库
+                        OpenAlbum();
+                    }
+                } else {
+                    // 安卓12及以下版本
+                    if (ContextCompat.checkSelfPermission(EditArticleActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
+                        // 请求权限
+                        ActivityCompat.requestPermissions(EditArticleActivity.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 1);
+                    } else {
+                        // 打开图库
+                        OpenAlbum();
+                    }
+                }
             }
         });
 
