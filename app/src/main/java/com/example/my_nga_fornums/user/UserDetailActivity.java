@@ -167,7 +167,7 @@ public class UserDetailActivity extends BaseActivity implements View.OnClickList
                     })
                     .positiveText("确定")
                     .show();
-
+//
         }
         else if(layoutId == layout_sex.getId()){
 
