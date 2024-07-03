@@ -15,6 +15,7 @@ import android.os.Bundle;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -171,12 +172,14 @@ public class EditArticleActivity extends BaseActivity {
                                 // 构建请求
                                 Request request = new Request.Builder()
                                         .url("http://101.42.105.71:9999/article/addArticle")
+                                        .post(requestBody)
                                         .build();
 
                                 // 执行请求
                                 Response response = client.newCall(request).execute();
                                 assert response.body() != null;
                                 String data = response.body().string();
+                                Log.d("123456789",data);
                             } catch (IOException e) {
                                 throw new RuntimeException(e);
                             }
