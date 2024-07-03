@@ -29,6 +29,7 @@ import androidx.core.content.ContextCompat;
 
 import com.example.my_nga_fornums.R;
 import com.example.my_nga_fornums.tools.BaseActivity;
+import com.example.my_nga_fornums.user.UserDetailActivity;
 import com.example.my_nga_fornums.user.UserInfo;
 
 import org.litepal.LitePal;
@@ -100,11 +101,12 @@ public class EditArticleActivity extends BaseActivity {
         // 设置图片点击监听器
         editImageView.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                if (ContextCompat.checkSelfPermission(EditArticleActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED)
+            public void onClick(View view) {
+                if (ContextCompat.checkSelfPermission(EditArticleActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
                     ActivityCompat.requestPermissions(EditArticleActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
-                else
+                } else {
                     OpenAlbum();
+                }
             }
         });
 
@@ -204,10 +206,23 @@ public class EditArticleActivity extends BaseActivity {
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         switch (requestCode) {
             case 1:
-                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    OpenAlbum();
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                    // 安卓13及以上版本
+                    if (ContextCompat.checkSelfPermission(EditArticleActivity.this, Manifest.permission.READ_MEDIA_IMAGES) == PackageManager.PERMISSION_DENIED) {
+                        // 请求权限
+                        ActivityCompat.requestPermissions(EditArticleActivity.this, new String[]{Manifest.permission.READ_MEDIA_IMAGES}, 1);
+                    } else {
+                        OpenAlbum();
+                    }
                 } else {
-                    Toast.makeText(this, "未给予打开相册的权限", Toast.LENGTH_SHORT).show();
+                    // 安卓12及以下版本
+                    if (ContextCompat.checkSelfPermission(EditArticleActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
+                        // 请求权限
+                        ActivityCompat.requestPermissions(EditArticleActivity.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 1);
+                    } else {
+                        // 打开图库
+                        OpenAlbum();
+                    }
                 }
                 break;
             default:
