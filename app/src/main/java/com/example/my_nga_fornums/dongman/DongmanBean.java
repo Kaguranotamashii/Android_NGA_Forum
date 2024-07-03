@@ -4,6 +4,8 @@ import android.widget.ImageView;
 
 public class DongmanBean {
     private String id;
+
+
     private String name;
     private String images[];
     private String image;

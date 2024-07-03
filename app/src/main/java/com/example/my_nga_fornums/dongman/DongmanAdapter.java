@@ -13,8 +13,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.my_nga_fornums.R;
+import com.example.my_nga_fornums.news.NewsBean;
+import com.google.gson.Gson;
 
 
+import java.security.Guard;
 import java.util.List;
 
 public class DongmanAdapter extends RecyclerView.Adapter<DongmanAdapter.DongmanViewHolder> {
@@ -49,8 +52,10 @@ public class DongmanAdapter extends RecyclerView.Adapter<DongmanAdapter.DongmanV
 
         // 设置点击监听器
         holder.itemView.setOnClickListener(v -> {
-            Intent intent = new Intent(context, DongmanWebActivity.class);
-            intent.putExtra("pageUrl", "https://www.bing.com/search?q="+item.getName());  // 传递 URL
+            Intent intent = new Intent(context, DongmanVideoActivity.class);
+//            item这个对象怎么变成json格式
+            String json =  new Gson().toJson(item);
+            intent.putExtra("DongmanInfo", json);  // 传递 URL
             context.startActivity(intent);
         });
     }

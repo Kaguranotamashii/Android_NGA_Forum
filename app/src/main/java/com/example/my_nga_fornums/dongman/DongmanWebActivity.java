@@ -1,28 +1,20 @@
 package com.example.my_nga_fornums.dongman;
 
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.widget.Toolbar;
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.net.http.SslError;
 import android.os.Bundle;
-import android.text.TextUtils;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.webkit.SslErrorHandler;
-import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Toast;
 
-import com.example.my_nga_fornums.MainActivity;
+import androidx.appcompat.widget.Toolbar;
+
 import com.example.my_nga_fornums.R;
-import com.example.my_nga_fornums.news.NewsCollectBean;
 import com.example.my_nga_fornums.tools.BaseActivity;
-import org.litepal.LitePal;
-import java.util.List;
 
 //若需要启用Javascript，则抑制其警告
 @SuppressLint("SetJavaScriptEnabled")
