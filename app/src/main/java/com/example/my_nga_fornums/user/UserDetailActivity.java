@@ -29,8 +29,7 @@ import android.widget.TextView;
 import android.widget.ImageView;
 import android.text.InputType;
 
-import java.io.FileNotFoundException;
-import java.io.InputStream;
+
 import java.text.ParseException;
 import java.util.Calendar;
 import java.util.Date;
@@ -52,7 +51,6 @@ public class UserDetailActivity extends BaseActivity implements View.OnClickList
     // 定义线性布局
     private LinearLayout layout_avatar, layout_nickname, layout_sex, layout_birth, layout_signature;
     private TextView showNickName, showSex, showBirthday, showSignature;
-    private ImageView Img;
     private Calendar calendar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -262,19 +260,30 @@ public class UserDetailActivity extends BaseActivity implements View.OnClickList
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                // 保存更改的数据
-                userInfo.save();
-                Intent intent = new Intent();
-                intent.putExtra("nickName", showNickName.getText().toString());
-                intent.putExtra("signature", showSignature.getText().toString());
-                intent.putExtra("imagePath", userInfo.getImagePath());
-                setResult(RESULT_OK, intent);
-                System.out.println("当前个人信息活动页被销毁！！！");
-                UserDetailActivity.this.finish();
+                Save();
                 break;
         }
         return true;
     }
+    @Override
+    public void onBackPressed(){
+            Save();
+    }
+
+    private void Save(){
+        // 保存更改的数据
+        userInfo.save();
+        Intent intent = new Intent();
+        intent.putExtra("nickName", showNickName.getText().toString());
+        intent.putExtra("signature", showSignature.getText().toString());
+        intent.putExtra("imagePath", userInfo.getImagePath());
+        setResult(RESULT_OK, intent);
+        System.out.println("当前个人信息活动页被销毁！！！");
+        UserDetailActivity.this.finish();
+    }
+
+
+
 
 }
 
