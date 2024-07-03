@@ -3,7 +3,10 @@
     package="com.example.my_nga_fornums">
     <!-- 添加访问网络的权限 -->
     <uses-permission android:name="android.permission.INTERNET" /> <!-- SD卡写入:https://blog.csdn.net/haoxuhong/article/details/79864113 -->
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
+    <uses-permission android:name="android.permission.READ_CONTACTS"/>
+
 
     <application
         android:usesCleartextTraffic="true"
@@ -21,7 +24,7 @@
         <activity android:name="com.example.my_nga_fornums.user.UserDetailActivity" />
         <activity android:name="com.example.my_nga_fornums.user.RegisterActivity" />
         <activity android:name="com.example.my_nga_fornums.user.LoginActivity" />
-        <activity android:name="com.example.my_nga_fornums.news.WebActivity" />
+        <activity android:name="com.example.my_nga_fornums.news.WebActivity" />-->
         <activity android:name=".dongman.DongmanWebActivity"/>
         <!--
             使用singleTask会在返回栈中检查是否存在该活动实例，

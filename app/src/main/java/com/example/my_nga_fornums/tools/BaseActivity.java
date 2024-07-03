@@ -3,6 +3,7 @@ package com.example.my_nga_fornums.tools;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -28,4 +29,6 @@ public class BaseActivity extends AppCompatActivity {
         // 在活动销毁时，从活动管理器的活动列表中移除当前活动。
         ActivityCollector.removeActivity(this);
     }
+
+
 }

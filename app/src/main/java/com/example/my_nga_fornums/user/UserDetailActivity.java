@@ -1,16 +1,19 @@
 package com.example.my_nga_fornums.user;
 
 import android.Manifest;
-import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.icu.text.SimpleDateFormat;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 
-import androidx.annotation.Nullable;
+
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
@@ -18,6 +21,7 @@ import androidx.core.content.ContextCompat;
 
 import android.provider.MediaStore;
 import android.text.TextUtils;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.LinearLayout;
@@ -104,32 +108,33 @@ public class UserDetailActivity extends BaseActivity implements View.OnClickList
 
     }
     private void initData(String userId) {
-//        userInfo = new UserInfo();
-//        userInfo.setNickName("syr");
-//        userInfo.setUserSex("男");
-//        userInfo.setUserBirthDay("2000-11-1");
-//        userInfo.setUserSignature("hellow world");
+        userInfo = new UserInfo();
+        userInfo.setNickName("syr");
+        userInfo.setUserSex("男");
+        userInfo.setUserBirthDay("2000-11-1");
+        userInfo.setUserSignature("hellow world");
 
-        List<UserInfo> infos = LitePal.where("userAccount = ?", userId).find(UserInfo.class);
-        userInfo = infos.get(0);
+        //List<UserInfo> infos = LitePal.where("userAccount = ?", userId).find(UserInfo.class);
+        //userInfo = infos.get(0);
         System.out.println("用户详情界面的信息为" + userInfo);
         showNickName.setText(userInfo.getNickName());
         showSex.setText(userInfo.getUserSex());
         showBirthday.setText(userInfo.getUserBirthDay());
         showSignature.setText(userInfo.getUserSignature());
         String curImagePath = userInfo.getImagePath();
-        //diplayImage(curImagePath);
+        diplayImage(curImagePath);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.TIRAMISU)
     @Override
     public void onClick(View v) {
 
         int layoutId = v.getId();
         if (layoutId == layout_avatar.getId()){
             //是否拥有存储内容获取权限
-            if (ContextCompat.checkSelfPermission(UserDetailActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED){
+            if (ContextCompat.checkSelfPermission(UserDetailActivity.this, Manifest.permission.READ_MEDIA_IMAGES) == PackageManager.PERMISSION_DENIED){
                 //请求存储内容获取权限
-                ActivityCompat.requestPermissions(UserDetailActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
+                ActivityCompat.requestPermissions(UserDetailActivity.this, new String[]{Manifest.permission.READ_MEDIA_IMAGES}, 1);
             }
             else{
                 Intent intent = new Intent(Intent.ACTION_PICK, null);
@@ -213,21 +218,55 @@ public class UserDetailActivity extends BaseActivity implements View.OnClickList
     }
     //更换头像
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+    protected void onActivityResult(int requestCode, int resultCode,Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == OPEN_GALLERY_REQUEST_CODE) { // 检测请求码
             if (resultCode == RESULT_OK && data != null) {
-                try {
-                    InputStream inputStream = getContentResolver().openInputStream(data.getData());
-                    Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
-                    // TODO 把获取到的图片放到ImageView上
-                    Img = findViewById(R.id.user_avatar);
-                    Img.setImageBitmap(bitmap);
-                } catch (FileNotFoundException e) {
-                    e.printStackTrace();
-                }
+                Uri uri = data.getData();
+                String imagePath = getImagePath(uri, null);
+                diplayImage(imagePath);
             }
         }
+    }
+
+    private String getImagePath(Uri uri, String selection) {
+        String path = null;
+        //通过Uri和selection来获取真实的图片路径
+        Cursor cursor = getContentResolver().query(uri, null, selection, null, null);
+        if (cursor != null) {
+            if (cursor.moveToFirst()) {
+                path = cursor.getString(cursor.getColumnIndex(MediaStore.Images.Media.DATA));
+            }
+            cursor.close();
+        }
+        return path;
+    }
+
+    private void diplayImage(String imagePath) {
+        if (!TextUtils.isEmpty(imagePath)) {
+            Bitmap bitmap = BitmapFactory.decodeFile(imagePath);
+            userAvatar.setImageBitmap(bitmap);
+        } else {
+            userAvatar.setImageResource(R.drawable.akl);
+        }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                // 保存更改的数据
+                userInfo.save();
+                Intent intent = new Intent();
+                intent.putExtra("nickName", showNickName.getText().toString());
+                intent.putExtra("signature", showSignature.getText().toString());
+                intent.putExtra("imagePath", userInfo.getImagePath());
+                setResult(RESULT_OK, intent);
+                System.out.println("当前个人信息活动页被销毁！！！");
+                UserDetailActivity.this.finish();
+                break;
+        }
+        return true;
     }
 
 }
