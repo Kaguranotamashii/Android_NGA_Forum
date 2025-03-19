@@ -66,7 +66,7 @@ public class MainActivity extends BaseActivity {
     private ImageView userAvatar;
     // 采用静态变量来存储当前登录的账号
     public static String currentUserId;
-    // 记录读者账号，相当于Session来使用
+    // 记录读者账号,相当于Session来使用
     private String currentUserNickName, currentSignature, currentImagePath;
 
     @Override
@@ -74,7 +74,7 @@ public class MainActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         toolbar = findViewById(R.id.toolbar);
-        //注意：只需第一次创建或升级本地数据库，第二次运行就注释掉
+        //注意:只需第一次创建或升级本地数据库,第二次运行就注释掉
         Connector.getDatabase();
         //Toast.makeText(MainActivity.this, "创建数据库成功", Toast.LENGTH_LONG).show();
         //获取抽屉布局实例
@@ -110,7 +110,7 @@ public class MainActivity extends BaseActivity {
         if (actionBar != null) {
             //通过HomeAsUp来让导航按钮显示出来
             actionBar.setDisplayHomeAsUpEnabled(true);
-            //设置Indicator来添加一个点击图标（默认图标是一个返回的箭头）
+            //设置Indicator来添加一个点击图标(默认图标是一个返回的箭头)
             actionBar.setHomeAsUpIndicator(R.drawable.ic_menu);
         }
         //设置默认选中第一个
@@ -122,14 +122,14 @@ public class MainActivity extends BaseActivity {
                 //逻辑页面处理
                 mDrawerLayout.closeDrawers();
                 int itemId = menuItem.getItemId();
-                if (itemId == R.id.nav_edit) {//每个菜单项的点击事件，通过Intent实现点击item简单实现活动页面的跳转。
+                if (itemId == R.id.nav_edit) {//每个菜单项的点击事件,通过Intent实现点击item简单实现活动页面的跳转.
                     if (!TextUtils.isEmpty(currentUserId)) {
                         Intent editIntent = new Intent(MainActivity.this, UserDetailActivity.class);
                         editIntent.putExtra("user_edit_id", currentUserId);
                         startActivityForResult(editIntent, 3);
                     } else {
                         Intent loginIntent = new Intent(MainActivity.this, LoginActivity.class);
-                        loginIntent.putExtra("loginStatus", "请先登录后才能操作！");
+                        loginIntent.putExtra("loginStatus", "请先登录后才能操作!");
                         startActivityForResult(loginIntent, 1);
                     }
                 } else if (itemId == R.id.nav_articles) {// 我发布的文章
@@ -139,7 +139,7 @@ public class MainActivity extends BaseActivity {
                         startActivityForResult(editIntent, 6);
                     } else {
                         Intent loginIntent = new Intent(MainActivity.this, LoginActivity.class);
-                        loginIntent.putExtra("loginStatus", "请先登录后才能操作！");
+                        loginIntent.putExtra("loginStatus", "请先登录后才能操作!");
                         startActivityForResult(loginIntent, 1);
                     }
                 } else if (itemId == R.id.nav_favorite) {
@@ -149,11 +149,11 @@ public class MainActivity extends BaseActivity {
                         startActivity(loveIntent);
                     } else {
                         Intent loginIntent = new Intent(MainActivity.this, LoginActivity.class);
-                        loginIntent.putExtra("loginStatus", "请先登录后才能操作！");
+                        loginIntent.putExtra("loginStatus", "请先登录后才能操作!");
                         startActivityForResult(loginIntent, 1);
                     }
                 } else if (itemId == R.id.nav_clear_cache) {// 清除缓存
-                    // Toast.makeText(MainActivity.this,"你点击了清除缓存，下步实现把",Toast.LENGTH_SHORT).show();
+                    // Toast.makeText(MainActivity.this,"你点击了清除缓存,下步实现把",Toast.LENGTH_SHORT).show();
 //                    clearCacheData();
                 } else if (itemId == R.id.nav_switch) {// 切换账号
                     Intent intent = new Intent(MainActivity.this, LoginActivity.class);
@@ -165,7 +165,7 @@ public class MainActivity extends BaseActivity {
         });
 
 
-        //表示ViewPager（默认）预加载一页
+        //表示ViewPager(默认)预加载一页
         //viewPager.setOffscreenPageLimit(1);
 
         viewPager.setAdapter(new FragmentStatePagerAdapter(getSupportFragmentManager(), FragmentStatePagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
@@ -213,7 +213,7 @@ public class MainActivity extends BaseActivity {
 
         tabLayout.setupWithViewPager(viewPager);
 
-        // 加载上次登录的账号，起到记住会话的功能
+        // 加载上次登录的账号,起到记住会话的功能
         String inputText = load();
         if (!TextUtils.isEmpty(inputText) && TextUtils.isEmpty(currentUserId)) {
             currentUserId = inputText;
@@ -227,7 +227,7 @@ public class MainActivity extends BaseActivity {
             userNickName.setText(userInfos.get(0).getNickName());
             userSignature.setText(userInfos.get(0).getUserSignature());
             currentImagePath = userInfos.get(0).getImagePath();
-            System.out.println("主界面初始化数据：" + userInfos);
+            System.out.println("主界面初始化数据:" + userInfos);
             diplayImage(currentImagePath);
         } else {
             userNickName.setText("请先登录");
@@ -263,24 +263,24 @@ public class MainActivity extends BaseActivity {
                     currentUserNickName = data.getStringExtra("userNick");
                     currentSignature = data.getStringExtra("userSign");
                     currentImagePath = data.getStringExtra("imagePath");
-                    Log.d(TAG, "当前用户的账号为：" + currentUserId);
-                    Log.d(TAG, "当前用户的昵称为：" + currentUserNickName);
-                    Log.d(TAG, "当前用户的个性签名为： " + currentSignature);
+                    Log.d(TAG, "当前用户的账号为:" + currentUserId);
+                    Log.d(TAG, "当前用户的昵称为:" + currentUserNickName);
+                    Log.d(TAG, "当前用户的个性签名为: " + currentSignature);
                     Log.d(TAG, "当前用户的头像地址为: " + currentImagePath);
                     userNickName.setText(currentUserNickName);
                     userSignature.setText(currentSignature);
                     diplayImage(currentImagePath);
                 }
                 break;
-            case 3: // 从个人信息返回来的数据，要更新导航栏中的数据，包括昵称，签名，图片路径
+            case 3: // 从个人信息返回来的数据,要更新导航栏中的数据,包括昵称,签名,图片路径
                 if (resultCode == RESULT_OK) {
                     currentUserNickName = data.getStringExtra("nickName");
                     currentSignature = data.getStringExtra("signature");
                     currentImagePath = data.getStringExtra("imagePath");
-                    Log.d(TAG, "当前用户的昵称为：" + currentUserNickName);
-                    Log.d(TAG, "当前用户的个性签名为： " + currentSignature);
-                    Log.d(TAG, "当前用户的图片路径为： " + currentImagePath);
-                    System.out.println("当前用户的图片路径为： " + currentImagePath);
+                    Log.d(TAG, "当前用户的昵称为:" + currentUserNickName);
+                    Log.d(TAG, "当前用户的个性签名为: " + currentSignature);
+                    Log.d(TAG, "当前用户的图片路径为: " + currentImagePath);
+                    System.out.println("当前用户的图片路径为: " + currentImagePath);
                     userNickName.setText(currentUserNickName);
                     userSignature.setText(currentSignature);
                     diplayImage(currentImagePath);
@@ -295,26 +295,26 @@ public class MainActivity extends BaseActivity {
 //    public void clearCacheData() {
 //        // 缓存目录为 /data/user/0/com.example.viewnews/cache
 //        File file = new File(MainActivity.this.getCacheDir().getPath());
-//        System.out.println("缓存目录为：" + MainActivity.this.getCacheDir().getPath());
+//        System.out.println("缓存目录为:" + MainActivity.this.getCacheDir().getPath());
 //        String cacheSize = null;
 //        try {
 //            cacheSize = DataCleanManager.getCacheSize(file);
 //        } catch (Exception e) {
 //            e.printStackTrace();
 //        }
-//        System.out.println("缓存大小为：" + cacheSize);
+//        System.out.println("缓存大小为:" + cacheSize);
 //        new MaterialDialog.Builder(MainActivity.this)
 //                .title("提示")
-//                .content("当前缓存大小一共为" + cacheSize + "。确定要删除所有缓存？离线内容及其图片均会被清除。")
+//                .content("当前缓存大小一共为" + cacheSize + ".确定要删除所有缓存?离线内容及其图片均会被清除.")
 //                .positiveText("确认")
 //                .onPositive(new MaterialDialog.SingleButtonCallback() {
 //                    @Override
 //                    public void onClick(MaterialDialog dialog, DialogAction which) {
 //                        // dialog 此弹窗实例共享父实例
-//                        System.out.println("点击了啥内容：" + which);
+//                        System.out.println("点击了啥内容:" + which);
 //                        // 没起作用
 //                        DataCleanManager.cleanInternalCache(MainActivity.this);
-//                        Toast.makeText(MainActivity.this, "成功清除缓存。", Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(MainActivity.this, "成功清除缓存.", Toast.LENGTH_SHORT).show();
 //                    }
 //                })
 //                .negativeText("取消")
@@ -334,7 +334,7 @@ public class MainActivity extends BaseActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int itemId = item.getItemId();//R.id.home修改导航按钮的点击事件为打开侧滑
-        if (itemId == android.R.id.home) {//打开侧滑栏，注意要与xml中保持一致START
+        if (itemId == android.R.id.home) {//打开侧滑栏,注意要与xml中保持一致START
             mDrawerLayout.openDrawer(GravityCompat.START);
         } else if (itemId == R.id.userFeedback) {//填写用户反馈
             new MaterialDialog.Builder(MainActivity.this)
@@ -344,8 +344,8 @@ public class MainActivity extends BaseActivity {
                     .input(null, null, new MaterialDialog.InputCallback() {
                         @Override
                         public void onInput(MaterialDialog dialog, CharSequence input) {
-                            System.out.println("反馈的内容为：" + input);
-                            Toast.makeText(MainActivity.this, "反馈成功！反馈内容为：" + input, Toast.LENGTH_SHORT).show();
+                            System.out.println("反馈的内容为:" + input);
+                            Toast.makeText(MainActivity.this, "反馈成功!反馈内容为:" + input, Toast.LENGTH_SHORT).show();
                         }
                     })
                     .positiveText("确定")
@@ -354,7 +354,7 @@ public class MainActivity extends BaseActivity {
         } else if (itemId == R.id.userExit) {
             SweetAlertDialog mDialog = new SweetAlertDialog(MainActivity.this, SweetAlertDialog.NORMAL_TYPE)
                     .setTitleText("提示")
-                    .setContentText("您是否要退出？")
+                    .setContentText("您是否要退出?")
                     .setCustomImage(null)
                     .setCancelText("取消")
                     .setConfirmText("确定")
@@ -377,7 +377,7 @@ public class MainActivity extends BaseActivity {
 
     // 加载数据
     public String load() {
-        //读取我们之前存储到data文件中的账号，方便下次启动app时直接使用
+        //读取我们之前存储到data文件中的账号,方便下次启动app时直接使用
         FileInputStream in = null;
         BufferedReader reader = null;
         StringBuilder content = new StringBuilder();
